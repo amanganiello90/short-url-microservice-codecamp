@@ -30,7 +30,7 @@ https://short-url-microservice.glitch.me/3502
 https://www.google.com/
 ```
 
-N.B it is used a mLab mongodb database. there are this env variables:
+N.B it is used a mLab mongodb database. There are these env variables:
 
 ```
 MONGOLAB_URI=mongodb://test:test@ds038547.mlab.com:38547/url-shortener
