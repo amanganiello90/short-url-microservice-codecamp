@@ -36,3 +36,5 @@ N.B it is used a mLab mongodb database. There are these env variables:
 MONGOLAB_URI=mongodb://test:test@ds038547.mlab.com:38547/url-shortener
 APP_URL=https://short-url-microservice.glitch.me/
 ```
+
+To use these you should store them in a .env file 
