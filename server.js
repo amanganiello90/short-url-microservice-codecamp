@@ -8,7 +8,35 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
+var path = require('path');
+var mongo = require('mongodb');
+var api = require('./app/url-shortener.js');
+require('dotenv').config({
+  silent: true
+});
 
+
+mongo.MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
+
+  if (err) {
+    throw new Error('Database failed to connect!');
+  } else {
+    console.log('Successfully connected to MongoDB on port 38547.');
+  }
+
+  // The format follows as, alias to use for real path, also allows permission to such path.
+
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'jade');
+
+  db.createCollection("sites", {
+    capped: true,
+    size: 5242880,
+    max: 5000
+});
+  
+api(app, db);
+  
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
     var allowedOrigins = ['https://narrow-plane.gomix.me', 'https://www.freecodecamp.com'];
@@ -54,7 +82,9 @@ app.use(function(err, req, res, next) {
   }  
 })
 
+
 app.listen(process.env.PORT, function () {
   console.log('Node.js listening ...');
 });
 
+});
